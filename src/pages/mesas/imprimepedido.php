@@ -147,12 +147,7 @@ $body3 = '
             </table>
             <hr>
         </div>
-        <h4>Realize o seu pagamento com QRCode</h4>
-        <div>
-            <img src="https://caipiradopastel.000webhostapp.com/public/assets/images/QRCODE.png" style ="margin-left: 50px">
-            <p style = "text_align: center;">Cleber Adroaldo Silva Rocha <br>Banco - C6 S.A</p>
-            
-        </div>
+        <h4>Obrigado pela presen&ccedil;a. Volte Sempre!</h4>
     </main>
 </body>
 ';

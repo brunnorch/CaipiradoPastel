@@ -12,17 +12,15 @@ if (empty($_POST['usuario']) || empty($_POST['senha'])) {
 $usuario = mysqli_real_escape_string($conexao, trim($_POST['usuario']));
 $senha = mysqli_real_escape_string($conexao, trim($_POST['senha']));
 
-#Verificando login
-$query = "SELECT idUsuario, usuario, cargo FROM usuario WHERE usuario = '{$usuario}' AND senha = md5('{$senha}')";
 
-#Execução da verificação
-$result = mysqli_query($conexao, $query);
-$row = mysqli_fetch_assoc($result);
-if ($row['cargo'] == 'administrador' || $row['cargo'] == 'caixa') {
+/* VERIFICA QUEM ESTÁ LOGANDO E REDIRECIONA */
+$login = mysqli_query($conexao, "SELECT idUsuario, usuario, cargo FROM usuario WHERE usuario = '{$usuario}' AND senha = md5('{$senha}')");
+$logado = mysqli_fetch_assoc($login);
+if ($logado['cargo'] == 'administrador' || $row['cargo'] == 'caixa') {
     $_SESSION['usuario'] = $usuario;
     header('Location: ../src/pages/principal/menu.php');
     exit();
-} elseif ($row['cargo'] == 'garçom') {
+} elseif ($logado['cargo'] == 'garçom') {
     $_SESSION['usuario'] = $usuario;
     header('Location: ../src/pages/principal/venda.php');
     exit();

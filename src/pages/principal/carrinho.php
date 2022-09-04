@@ -129,8 +129,16 @@ $show = mysqli_fetch_all($resultshow);
                             <div class="col-md-5">
                                 <label class="form-label">Garçom</label>
                                 <div class="col-auto">
+
+
                                     <select class="form-select" name="garcom" required>
-                                        <option selected value='<?= $_SESSION['usuario'] ?>'><?= ucfirst($_SESSION['usuario']) ?></option>
+                                        <option selected></option>
+                                        <?php
+                                        $usuarios = mysqli_query($conexao, "SELECT idUsuario, usuario, cargo FROM usuario WHERE NOT cargo = 'administrador'");
+                                        $usuarios = mysqli_fetch_all($usuarios);
+                                        foreach ($usuarios as $colabs) : ?>
+                                            <option value='<?= $colabs[1] ?>'><?= ucfirst($colabs[1]) ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
