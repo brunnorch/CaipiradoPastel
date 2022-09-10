@@ -49,9 +49,12 @@ function alerta($type, $title, $msg)
                             <div class="col-auto">
                                 <a href="../relatorios/imprimeCaixa.php?data=<?= $caixa[1] ?>" target='_blank' class="btn btn-warning">Relatório</a>
                             </div>
+                            <div class="col-auto">
+                                <a href="../relatorios/comanda.php" class="btn btn-primary">Comandas</a>
+                            </div>
                         <?php endif; ?>
                         <div class="col-auto">
-                            <a href="../principal/carrinho.php" id="verCarrinho" class="btn btn-primary">Ver carrinho</a>
+                            <a href="../principal/carrinho.php" id="verCarrinho" class="btn btn-success">Ver carrinho</a>
                         </div>
                     </div>
 

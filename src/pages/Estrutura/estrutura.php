@@ -129,23 +129,6 @@
                     </ul>
                 </li>
 
-                <li>
-                    <div class="iocn-link">
-                        <a href="../relatorios/caixaMes.php">
-                            <i class='bx bx-book-alt'></i>
-                            <span class="link_name">Relatórios</span>
-                        </a>
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
-                    <ul class="sub-menu">
-                        <li><a class="link_name" href="#">Relatórios</a></li>
-                        <li><a href="../relatorios/caixaMes.php">Caixa</a></li>
-                        <li><a href="../relatorios/saidas.php">Saídas</a></li>
-                        <li><a href="../relatorios/comanda.php">Comandas</a></li>
-                        <li><a href="../relatorios/produtos.php">Produtos</a></li>
-                        <li><a href="../relatorios/danificados.php">Danificados</a></li>
-                    </ul>
-                </li>
 
                 <!-- ACESSO SOMENTE DO ADMINISTRADOR  -->
                 <?php if ($login['cargo'] == "administrador") : ?>
@@ -158,6 +141,24 @@
                             <li><a class="link_name" href="#">Colaboradores</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <div class="iocn-link">
+                            <a href="../relatorios/caixaMes.php">
+                                <i class='bx bx-book-alt'></i>
+                                <span class="link_name">Relatórios</span>
+                            </a>
+                            <i class='bx bxs-chevron-down arrow'></i>
+                        </div>
+                        <ul class="sub-menu">
+                            <li><a class="link_name" href="#">Relatórios</a></li>
+                            <li><a href="../relatorios/caixaMes.php">Caixa</a></li>
+                            <li><a href="../relatorios/saidas.php">Saídas</a></li>
+                            <li><a href="../relatorios/comanda.php">Comandas</a></li>
+                            <li><a href="../relatorios/produtos.php">Produtos</a></li>
+                            <li><a href="../relatorios/danificados.php">Danificados</a></li>
+                        </ul>
+                    </li>
+
                 <?php endif; ?>
             <?php else : ?>
                 <li>
