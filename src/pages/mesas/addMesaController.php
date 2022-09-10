@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
         $resultFinaliza = mysqli_query($conexao, $sqlFinaliza);
 
         /* SELECT JUNTANDO AS INFORMAÇÕES PARA CRIAR UM ARRAY */
-        $sqlJoin = "SELECT produtos.nomeProduto, produtos.valorProduto, carrinho_produto.quantidade
+        $sqlJoin = "SELECT produtos.idProduto, produtos.nomeProduto, produtos.valorProduto, carrinho_produto.quantidade
             FROM finaliza_pedido
             INNER JOIN usuario ON usuario.idUsuario = finaliza_pedido.idUsuario
             INNER JOIN carrinho_produto ON usuario.idUsuario = carrinho_produto.idUsuario
@@ -40,12 +40,12 @@ if (isset($_POST['submit'])) {
 
         /* CONCLUINDO O PEDIDO ADCIONANDO NA TABELA MESAS (TEMPORARIA) */
         foreach ($finalCompra as $row) {
-            $sqlPedido = "INSERT INTO mesas (comanda,garcom,nomeProduto, valorProduto, qtdProduto,dataVenda) VALUES ('$comanda','$garcom','$row[0]','$row[1]','$row[2]',NOW())";
+            $sqlPedido = "INSERT INTO mesas (comanda,garcom,idProduto,nomeProduto, valorProduto, qtdProduto,dataVenda) VALUES ('$comanda','$garcom','$row[0]','$row[1]','$row[2]','$row[3]',NOW())";
             $resultPedido = mysqli_query($conexao, $sqlPedido);
 
             /* DIMINUINDO ESTOQUE DO PRODUTO CONFORME O PEDIDO */
-            $sqlUpdate = "UPDATE produtos set quantiaProduto = quantiaProduto - '$row[2]'
-            where nomeProduto = '$row[0]'";
+            $sqlUpdate = "UPDATE produtos set quantiaProduto = quantiaProduto - '$row[3]'
+            where idProduto = '$row[0]'";
             $resultUpdate = mysqli_query($conexao, $sqlUpdate);
         }
 

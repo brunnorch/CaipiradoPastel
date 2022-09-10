@@ -27,8 +27,8 @@ if (isset($_POST['fimVenda'])) {
 
         /* TRANSFERE OS ITENS DO PEDIDO DA TABELA MESA(SERÁ APAGADA) PARA TABELA PEDIDOS(PERMANENTE) */
         $addPedido = mysqli_query($conexao, "INSERT INTO pedidos
-        (comanda,garcom,nomeProduto,valorProduto,qtdProduto,dataVenda)
-        SELECT comanda,garcom,nomeProduto,valorProduto,qtdProduto,dataVenda
+        (comanda,garcom,idProduto,nomeProduto,valorProduto,qtdProduto,dataVenda)
+        SELECT comanda,garcom,idProduto,nomeProduto,valorProduto,qtdProduto,dataVenda
         FROM mesas
         WHERE comanda = '$comanda'");
 

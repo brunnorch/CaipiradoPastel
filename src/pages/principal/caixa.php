@@ -72,8 +72,8 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="col-md-6">
                             <label for="inputAddress" class="form-label">Data</label>
-                            <input readyonly type="text" class="form-control" id="dataCadastro" name="dataCaixa" style="cursor: no-drop; text-align: center;" value="<?php $hoje = date('d/m/Y');
-                                                                                                                                                                        echo $hoje; ?>">
+                            <input readonly type="text" class="form-control" id="dataCadastro" name="dataCaixa" style="cursor: no-drop; text-align: center;" value="<?php $hoje = date('d/m/Y');
+                                                                                                                                                                    echo $hoje; ?>">
                         </div>
                         <div class="col-md-6">
                             <label for="inputCity" class="form-label">Quantia para abertura</label>

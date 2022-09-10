@@ -31,8 +31,9 @@ $style = "
         margin: 0px;
         width: 80mm;
         height: auto;
-
+        font-size: 15px;
     }
+    
 
     .empresa {
         text-align: center;
@@ -60,11 +61,6 @@ $style = "
         width: 80mm;
     }
 
-    th,
-    td {
-        text-align: center;
-
-    }
 
     tr.separated td {
         border-bottom: 1px solid black;
@@ -73,13 +69,6 @@ $style = "
     table {
 
         border-collapse: collapse;
-    }
-
-    .insta {
-        margin-top: 20px;   
-        text-align: center;
-        font-size: 20px;
-        font-weight: bold;
     }
 </style>
 ";
@@ -121,7 +110,7 @@ $body3 = '
 
                     <tr>
                         <th>QTD ITENS</th>
-                        <th>' . $qtdItens . '</th>
+                        <td>' . $qtdItens . '</td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -129,19 +118,19 @@ $body3 = '
                         <th>SUB. T</th>
                         <th></th>
                         <th></th>
-                        <th>R$ ' . number_format($subTotal, 2, ", ", " . ")  . '</th>
+                        <td style="font-weight: bold;">R$ ' . number_format($subTotal, 2, ", ", " . ")  . '</td>
                     </tr>
                     <tr>
                         <th>DESC</th>
                         <th></th>
                         <th></th>
-                        <th>R$ ' . number_format($_SESSION['desconto'], 2, ", ", " . ") . '</th>
+                        <td style="font-weight: bold;">R$ ' . number_format($_SESSION['desconto'], 2, ", ", " . ") . '</td>
                     </tr>
                     <tr>
                         <th>TOTAL</th>
                         <th></th>
                         <th></th>
-                        <th>R$ ' . number_format($subTotal - $_SESSION['desconto'], 2, ", ", " . ") . '</th>
+                        <td style="font-weight: bold;">R$ ' . number_format($subTotal - $_SESSION['desconto'], 2, ", ", " . ") . '</td>
                     </tr>
                 </tfoot>
             </table>

@@ -1,4 +1,3 @@
-<?php ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -15,12 +14,18 @@
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <!-- BOXICONS -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <!-- SWEET ALERT PARA ESTOQUE -->
     <script src="../../../public/assets/js/sweetalert2.all.min.js"></script>
     <!-- JQUERY -->
     <script src="../../../public/assets/js/jquery-3.6.1.min.js"></script>
+    <!-- DATA-TABLE -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.12.1/b-2.2.3/b-html5-2.2.3/r-2.3.0/sc-2.0.7/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+
+
     <!-- SCRIPT DO GRAFICO (CHARTS) -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
@@ -32,22 +37,22 @@
             <span class="logo_name">Gerencial</span>
         </div>
         <ul class="nav-links">
-            
+
             <?php
             include_once('../../conexao.php');
             /* VERIFICA QUEM ESTÁ LOGADO PARA DAR O NIVEIS DE ACESSO */
             $login = mysqli_query($conexao, "SELECT usuario,cargo FROM usuario WHERE usuario = '$_SESSION[usuario]'");
             $login = mysqli_fetch_assoc($login);
             if ($login['cargo'] == "administrador" || $login['cargo'] == "caixa") : ?>
-            <li>
-                <a href="../principal/menu.php">
-                    <i class='bx bx-home'></i>
-                    <span class="link_name">Início</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="../principal/menu.php">Início</a></li>
-                </ul>
-            </li>
+                <li>
+                    <a href="../principal/menu.php">
+                        <i class='bx bx-home'></i>
+                        <span class="link_name">Início</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="../principal/menu.php">Início</a></li>
+                    </ul>
+                </li>
                 <li>
                     <div class="iocn-link">
                         <a href="../principal/estoque.php">
@@ -124,40 +129,26 @@
                     </ul>
                 </li>
 
-                <!-- NIVEIS DE ACESSO -->
+                <li>
+                    <div class="iocn-link">
+                        <a href="../relatorios/caixaMes.php">
+                            <i class='bx bx-book-alt'></i>
+                            <span class="link_name">Relatórios</span>
+                        </a>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a class="link_name" href="#">Relatórios</a></li>
+                        <li><a href="../relatorios/caixaMes.php">Caixa</a></li>
+                        <li><a href="../relatorios/saidas.php">Saídas</a></li>
+                        <li><a href="../relatorios/comanda.php">Comandas</a></li>
+                        <li><a href="../relatorios/produtos.php">Produtos</a></li>
+                        <li><a href="../relatorios/danificados.php">Danificados</a></li>
+                    </ul>
+                </li>
+
+                <!-- ACESSO SOMENTE DO ADMINISTRADOR  -->
                 <?php if ($login['cargo'] == "administrador") : ?>
-                    <li>
-                        <div class="iocn-link">
-                            <a href="#">
-                                <i class='bx bx-book-alt'></i>
-                                <span class="link_name">Relatórios</span>
-                            </a>
-                            <i class='bx bxs-chevron-down arrow'></i>
-                        </div>
-                        <ul class="sub-menu">
-                            <li><a class="link_name" href="#">Relatórios</a></li>
-                            <li><a href="../relatorios/caixaMes.php">Caixa</a></li>
-                            <li><a href="../relatorios/saidas.php">Saídas</a></li>
-                            <li><a href="../relatorios/comanda.php">Comandas</a></li>
-                            <li><a href="../relatorios/produtos.php">Produtos</a></li>
-                            <li><a href="../relatorios/danificados.php">Danificados</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <div class="iocn-link">
-                            <a href="#">
-                                <i class='bx bx-bar-chart-alt-2'></i>
-                                <span class="link_name">Gráficos</span>
-                            </a>
-                            <i class='bx bxs-chevron-down arrow'></i>
-                        </div>
-                        <ul class="sub-menu">
-                            <li><a class="link_name" href="#">Gráficos</a></li>
-                            <li><a href="../graficos/graficoMensal.php">Caixa</a></li>
-                            <li><a href="../graficos/graficoProdutos.php">Produtos</a></li>
-                            <li><a href="../graficos/graficoDanificados.php">Danificados</a></li>
-                        </ul>
-                    </li>
                     <li>
                         <a href="../principal/colaboradores.php">
                             <i class='bx bx-id-card'></i>
@@ -171,9 +162,9 @@
             <?php else : ?>
                 <li>
                     <?php
-                     /* STATUS DO CAIXA  */
-                        $statusCaixa = mysqli_query($conexao, "SELECT statusCaixa FROM caixa order by statusCaixa desc");
-                        $statusCaixa = mysqli_fetch_assoc($statusCaixa);
+                    /* STATUS DO CAIXA  */
+                    $statusCaixa = mysqli_query($conexao, "SELECT statusCaixa FROM caixa order by statusCaixa desc");
+                    $statusCaixa = mysqli_fetch_assoc($statusCaixa);
                     if ($statusCaixa['statusCaixa'] == 0 || $statusCaixa['statusCaixa'] == null) : ?>
 
                         <a href='../principal/caixa.php'>
@@ -244,5 +235,46 @@
     console.log(sidebarBtn);
     sidebarBtn.addEventListener("click", () => {
         sidebar.classList.toggle("close");
+    });
+</script>
+
+<!-- SCRIPT DAS ABAS DE PRODUTOS -->
+<script>
+    $(document).ready(function() {
+        var table = $('#pasteis').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+            }
+        });
+
+        var table = $('#salgados').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+            }
+        });
+
+        var table = $('#doces').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+            }
+        });
+
+        var table = $('#bebidas').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+            }
+        });
+
+        var table = $('#refrigerantes').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+            }
+        });
+
+        var table = $('#alcoolicos').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+            }
+        });
     });
 </script>

@@ -62,11 +62,6 @@ $style = "
         width: 80mm;
     }
 
-    th,
-    td {
-        text-align: center;
-
-    }
 
     tr.separated td {
         border-bottom: 1px solid black;
@@ -75,13 +70,6 @@ $style = "
     table {
 
         border-collapse: collapse;
-    }
-
-    .insta {
-        margin-top: 20px;   
-        text-align: center;
-        font-size: 20px;
-        font-weight: bold;
     }
 </style>
 ";
@@ -100,10 +88,10 @@ $body1 = '
             <table class="conta">
                 <thead>
                     <tr>
-                        <th>Produto</th>
-                        <th>Quatia</th>
-                        <th>V. Uni</th>
-                        <th>V. Total</th>
+                        <th>PRODUTO</th>
+                        <th>QTD</th>
+                        <th>V. UNI</th>
+                        <th>V. TOT</th>
                     </tr>
                 </thead>
 
@@ -121,28 +109,28 @@ $body3 = '
                 <tfoot>
 
                     <tr>
-                        <th>Qtd Itens</th>
-                        <th>' . $qtdItens . '</th>
+                        <th>QTD ITENS</th>
+                        <td>' . $qtdItens . '</td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <th>Sub.Total</th>
+                        <th>SUB. TOTAL</th>
                         <th></th>
                         <th></th>
-                        <th>R$ ' . number_format($subTotal, 2, ", ", " . ")  . '</th>
+                        <td style="font-weight: bold;">R$ ' . number_format($subTotal, 2, ", ", " . ")  . '</td>
                     </tr>
                     <tr>
-                        <th>Desconto</th>
+                        <th>DESCONTO</th>
                         <th></th>
                         <th></th>
-                        <th>R$ ' . number_format($key[9], 2, ", ", " . ") . '</th>
+                        <td style="font-weight: bold;">R$ ' . number_format($key[9], 2, ", ", " . ") . '</td>
                     </tr>
                     <tr>
-                        <th>Total</th>
+                        <th>TOTAL</th>
                         <th></th>
                         <th></th>
-                        <th>R$ ' . number_format($subTotal - $key[9], 2, ", ", " . ") . '</th>
+                        <td style="font-weight: bold;">R$ ' . number_format($subTotal - $key[9], 2, ", ", " . ") . '</td>
                     </tr>
                 </tfoot>
             </table>

@@ -86,10 +86,10 @@ if ($vazia == null) {
                                     <input type="hidden" id="total" name="total" value="<?= $soma[0]; ?>">
                                     <label for="desconto" style="color: blue; font-size:18px; font-weight:bolder;">DESCONTO</label>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-5">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text">R$</span>
-                                        <input autofocus type="number" class="form-control" name="desconto" id="desconto" value="0" onchange="this.value = this.value.replace(/,/g, '.')" required>
+                                        <input autofocus type="number" class="form-control" name="desconto" id="desconto" value="0" step="0.010" onchange="this.value = this.value.replace(/,/g, '.')" required>
                                         <span class="input-group-text">,00</span>
                                         <button name="aplicarDesc" class='btn btn-primary'>Aplicar</i></button>
                                     </div>
@@ -156,7 +156,7 @@ if ($vazia == null) {
                         <label class="form-label">Cartão</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text">R$</span>
-                            <input type="number" class="form-control" name="cartao" id="cartao" value="0" onchange="this.value = this.value.replace(/,/g, '.')" required>
+                            <input type="number" class="form-control" name="cartao" id="cartao" step="0.010" value="0" onchange="this.value = this.value.replace(/,/g, '.')" required>
                             <span class="input-group-text">,00</span>
                         </div>
                     </div>
@@ -164,7 +164,7 @@ if ($vazia == null) {
                         <label class="form-label">PIX</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text">R$</span>
-                            <input type="number" class="form-control" name="pix" id="pix" value="0" onchange="this.value = this.value.replace(/,/g, '.')" required>
+                            <input type="number" class="form-control" name="pix" id="pix" value="0" step="0.010" onchange="this.value = this.value.replace(/,/g, '.')" required>
                             <span class="input-group-text">,00</span>
                         </div>
                     </div>
@@ -172,7 +172,7 @@ if ($vazia == null) {
                         <label class="form-label">Dinheiro</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text">R$</span>
-                            <input type="number" class="form-control" name="dinheiro" id="dinheiro" value="0" onchange="this.value = this.value.replace(/,/g, '.')" required>
+                            <input type="number" class="form-control" name="dinheiro" id="dinheiro" value="0" step="0.010" onchange="this.value = this.value.replace(/,/g, '.')" required>
                             <span class="input-group-text">,00</span>
                         </div>
                     </div>
@@ -181,7 +181,7 @@ if ($vazia == null) {
                             <label class="form-label">Troco para</label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">R$</span>
-                                <input type="number" class="form-control" name="troco" id="troco" value="0" onchange="this.value = this.value.replace(/,/g, '.')" required>
+                                <input type="number" class="form-control" name="troco" id="troco" value="0" step="0.010" onchange="this.value = this.value.replace(/,/g, '.')" required>
                                 <span class="input-group-text">,00</span>
                                 <input type="button" name="verTroco" id="verTroco" class="btn btn-sm btn-primary" onClick="trocoCliente()" value="Ver troco">
                             </div>

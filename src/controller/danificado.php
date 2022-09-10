@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
     }
 
     /* TIRA UM DO ESTOQUE */
-    $saiEstoque = mysqli_query($conexao, "UPDATE produtos set quantiaProduto = quantiaProduto - 1 where nomeProduto = '$nomeProd'");
+    $saiEstoque = mysqli_query($conexao, "UPDATE produtos set quantiaProduto = quantiaProduto - 1 where idProduto = '$idProd'");
 
     header(sprintf('location: %s', $_SERVER['HTTP_REFERER']));
     exit;
