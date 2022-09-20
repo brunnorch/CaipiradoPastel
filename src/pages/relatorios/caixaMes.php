@@ -115,7 +115,7 @@ $grafico = mysqli_fetch_all($grafico);
                 <div class="col-md-10">
                     <!-- EXIBE OS MESES DO ANO -->
                     <table id="caixa" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th scope="col">Mês</th>
                                 <th scope="col">Saldo Inicial</th>

@@ -4,7 +4,6 @@ include_once('../Estrutura/estrutura.php');
 include_once('../../verificalogin.php');
 include_once('../../conexao.php');
 
-
 /* VERIFICA QUEM ESTÁ LOGADO,ADICIONA NA TABELA CARINHO_PRODUTO O USUARIO LOGADO, ID DO PRODUTO E QTD  */
 $user = $_SESSION['usuario'];
 
@@ -23,7 +22,6 @@ GROUP BY carrinho_produto.idProduto) as gerou
 ON produtos.idProduto = gerou.idProduto
 GROUP BY produtos.idProduto");
 $show = mysqli_fetch_all($resultshow);
-$hoje = date('d/m/Y');
 
 $count = 0;
 $total = 0;
@@ -31,6 +29,8 @@ $total = 0;
 /* SELECIONAR QUEM É O RESPONSAVEL POR TIRAR O PEDIDO */
 $usuarios = mysqli_query($conexao, "SELECT idUsuario, usuario, cargo FROM usuario WHERE NOT cargo = 'administrador'");
 $usuarios = mysqli_fetch_all($usuarios);
+
+$hoje = date('d/m/Y');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -91,8 +91,8 @@ $usuarios = mysqli_fetch_all($usuarios);
                                 $total = $count + $total;
                                 ?>
                             <?php endforeach; ?>
-                        </tbody>
 
+                        </tbody>
                         <!-- VALOR TOTAL DA COMPRA -->
                         <tfoot style="font-size: 20px;">
                             <td></td>
@@ -114,27 +114,16 @@ $usuarios = mysqli_fetch_all($usuarios);
                     <div class="home-header">
                         <!-- CABEÇALHO -->
                         <span class="text">
-                            Criar Mesa
+                            Criar Entrega
                         </span>
                     </div>
 
                     <!-- FINALIZA PEDIDO -->
                     <div style="padding: 20px 0 0 0 ; border-width: 1px;">
-                        <form class="row g-3" action="../mesas/addMesaController.php" method="POST">
-
-                            <div class="col-md-2">
-                                <label for="inputCity" class="form-label">Mesa</label>
-                                <input type="number" class="form-control" id="mesa" name="mesa" min="1" maxlength="99" required>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="inputCity" class="form-label">Comanda</label>
-                                <input type="number" class="form-control" id="comanda" name="comanda" min="1" maxlength="5" required>
-                            </div>
-                            <div class="col-md-5">
+                        <form class="row g-3" action="../entregas/addEntrega.php" method="POST">
+                            <div class="col-md-3">
                                 <label class="form-label">Garçom</label>
                                 <div class="col-auto">
-
-
                                     <select class="form-select" name="garcom" required>
                                         <option selected></option>
                                         <?php foreach ($usuarios as $colabs) : ?>
@@ -143,11 +132,38 @@ $usuarios = mysqli_fetch_all($usuarios);
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <label for="inputCity" class="form-label">Cliente</label>
+                                <input type="text" class="form-control" id="cliente" name="cliente" required>
+                            </div>
                             <div class="col-md-3">
+                                <label for="inputCity" class="form-label">Celular</label>
+                                <input type="number" class="form-control" id="celular" name="celular" required>
+                            </div>
+                            <div class="col-md-2">
                                 <label for="inputAddress" class="form-label">Data</label>
-                                <input readonly type="text" class="form-control" id="dataCadastro" name="dataCaixa" style="cursor: no-drop; text-align: center;" value="<?= $hoje; ?>">
+                                <input readonly type="text" class="form-control" id="dataEntrega" name="dataEntrega" style="cursor: no-drop; text-align: center;" value="<?= $hoje; ?>">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Bairro</label>
+                                <input type="text" class="form-control" id="bairro" name="bairro" required>
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label">Endereço</label>
+                                <input type="text" class="form-control" id="endereco" name="endereco" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Numero</label>
+                                <input type="number" class="form-control" id="numero" name="numero" required>
                             </div>
 
+                            <div class="col-md-2">
+                                <label class="form-label">Taxa</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">R$</span>
+                                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" name="taxa" id="taxa" step="0.010" onchange="this.value = this.value.replace(/,/g, '.')" required>
+                                </div>
+                            </div>
                             <!-- ALERTA PARA COMANDA EXISTENTE -->
                             <?php
                             function alerta($type, $title, $msg)
@@ -169,7 +185,7 @@ $usuarios = mysqli_fetch_all($usuarios);
                             ?>
 
                             <div class="col-md-12" style="text-align: center;">
-                                <button type="submit" name="submit" class="btn btn-success">Criar Mesa</button>
+                                <button type="submit" name="submit" class="btn btn-success">Criar Entrega</button>
                             </div>
                         </form>
                     </div>

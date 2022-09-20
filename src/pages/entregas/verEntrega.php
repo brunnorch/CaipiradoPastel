@@ -4,22 +4,13 @@ include_once('../Estrutura/estrutura.php');
 include_once('../../verificalogin.php');
 include_once('../../conexao.php');
 
-/* PASSA OS PRODUTOS DA MESA PARA A TELA DETALHES DA MESA  */
-$comanda = $_GET['id'];
-$verMesa = mysqli_query($conexao, "SELECT comanda, nomeProduto, valorProduto, qtdProduto, dataVenda FROM mesas WHERE comanda ='$comanda'");
-$detalheMesa = mysqli_fetch_all($verMesa);
+/* PASSA OS PRODUTOS DA ENTREGA PARA A TELA DETALHES DA ENTREGA  */
+$idEntrega = $_GET['id'];
+$pedido = mysqli_query($conexao, "SELECT idEntrega, nomeProduto, valorProduto, qtdProduto, dataEntrega FROM entregas_andamento WHERE idEntrega ='$idEntrega'");
+$pedido = mysqli_fetch_all($pedido);
 
-
-/* VERIFICA SE A MESA FICOU ZERADA (SEM ITENS) */
-$vazia = mysqli_query($conexao, "SELECT * FROM mesas where comanda = '$comanda'");
-$vazia = mysqli_fetch_row($vazia);
-
-if ($vazia == null) {
-    //EXCLUI MESA
-    $excluiMesa = mysqli_query($conexao, "DELETE FROM numero_mesas WHERE comanda = '$comanda'");
-    header('location:../prinpcipal/mesa.php');
-    exit;
-}
+$cliente = mysqli_query($conexao, "SELECT * FROM entregas WHERE idEntrega ='$idEntrega'");
+$cliente = mysqli_fetch_assoc($cliente);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -30,7 +21,7 @@ if ($vazia == null) {
         <div class="home-header">
             <!-- CABEÇALHO -->
             <span class="text">
-                Detalhes da Mesa
+                Detalhes da Entrega
             </span>
         </div>
         <div class="home-content">
@@ -38,7 +29,7 @@ if ($vazia == null) {
             <div class="row align-items-center justify-content-center">
                 <div class="col-md-10">
                     <h5 style="text-align: center; font-weight:bold; color:red;">
-                        Comanda <?= $comanda ?>
+                         <?= ucfirst($cliente['clienteEntrega']) ?> -  <?= ucfirst($cliente['enderecoEntrega']) ?>, <?= $cliente['numeroEntrega'] ?>, <?= ucfirst($cliente['bairroEntrega']) ?>
                     </h5>
                     <table class="table table-primary table-hover">
                         <thead>
@@ -50,29 +41,40 @@ if ($vazia == null) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($detalheMesa as $detalhe) : ?>
+                            <?php foreach ($pedido as $detalhe) : ?>
                                 <tr>
                                     <td><?= ucfirst($detalhe[1]) ?></td>
                                     <td><?= $detalhe[3] ?></td>
-                                    <td><?= number_format($detalhe[3] * $detalhe[2], 2, ",", ".") ?></td>
+                                    <td>R$ <?= number_format($detalhe[3] * $detalhe[2], 2, ",", ".") ?></td>
                                     <td>
-                                        <a href='../mesas/updateQtd.php?id=<?= $comanda ?>&name=<?= $detalhe[1] ?>' class='btn btn-sm btn-success'><i class='bx bx-plus-medical'></i></a>
-                                        <a href='../mesas/removerMesa.php?id=<?= $comanda ?>&name=<?= $detalhe[1] ?>' class='btn btn-sm btn-danger excluiProduto'><i class='bx bxs-trash-alt'></i></a>
+                                        <a href='../entregas/addProduto.php?id=<?= $idEntrega ?>&name=<?= $detalhe[1] ?>' class='btn btn-sm btn-success'><i class='bx bx-plus-medical'></i></a>
+                                        <a href='../entregas/removeProduto.php?id=<?= $idEntrega ?>&name=<?= $detalhe[1] ?>' class='btn btn-sm btn-danger excluiProduto'><i class='bx bxs-trash-alt'></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                         <tfoot>
-                            <td></td>
-                            <th>TOTAL :</th>
-                            <th>
-                                <?php
-                                $sqlSoma = mysqli_query($conexao, "SELECT sum(valorProduto*qtdProduto) from mesas where comanda ='$detalhe[0]'");
-                                $soma = mysqli_fetch_row($sqlSoma);
-                                echo "R$ " . number_format($soma[0], 2, ",", ".");
-                                ?>
-                            </th>
-                            <td></td>
+                            <tr>
+                                <!-- VALOR DA ENTREGA -->
+                                <td></td>
+                                <th>ENTREGA :</th>
+                                <th>R$ <?= number_format($cliente['taxaEntrega'], 2, ",", ".") ?></th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <!-- TOTAL DO PEDIDO COM O ENTREGA -->
+                                <td></td>
+                                <th>TOTAL :</th>
+                                <th>
+                                    <?php
+                                    $sqlSoma = mysqli_query($conexao, "SELECT sum(valorProduto*qtdProduto) from entregas_andamento where idEntrega ='$idEntrega'");
+                                    $soma = mysqli_fetch_row($sqlSoma);
+                                    $totalEntrega = $soma[0] + $cliente['taxaEntrega'];
+                                    echo "R$ " . number_format($totalEntrega, 2, ",", ".");
+                                    ?>
+                                </th>
+                                <td></td>
+                            </tr>
                         </tfoot>
                     </table>
 
@@ -82,7 +84,7 @@ if ($vazia == null) {
                         <form action="../mesas/aplicarDesconto.php" method="POST">
                             <div class="row justify-content-end">
                                 <div class="col-md-2">
-                                    <input type="hidden" id="total" name="total" value="<?= $soma[0]; ?>">
+                                    <input type="hidden" id="total" name="total" value="<?= $totalEntrega ?>">
                                     <label for="desconto" style="color: blue; font-size:18px; font-weight:bolder;">DESCONTO</label>
                                 </div>
                                 <div class="col-md-4">
@@ -103,20 +105,20 @@ if ($vazia == null) {
 
                     <div class="d-flex justify-content-center">
                         <div style="padding:5px ;">
-                            <a href="../mesas/editarMesa.php?id=<?php echo $comanda ?>" class="btn btn-danger">Editar mesa</a>
+                            <a href="../entregas/editarEntrega.php?id=<?php echo $idEntrega ?>" class="btn btn-danger">Editar mesa</a>
                         </div>
 
                         <?php if ($login['cargo'] != "garçom") : ?>
                             <div style="padding:5px ;">
-                                <a href="../mesas/imprimepedido.php?id=<?php echo $comanda ?>" class="btn btn-dark" target="_blank">Imprimir</a>
+                                <a href="../entregas/imprimeEntrega.php?id=<?php echo $idEntrega ?>" class="btn btn-dark" target="_blank">Imprimir</a>
                             </div>
                             <div style="padding:5px ;">
-                                <a href="#" class="btn btn-success fecharMesa" id="modal-comanda">Fechar mesa</a>
+                                <a href="#" class="btn btn-success fecharMesa" id="modal-comanda">Confirmar entrega</a>
                             </div>
                         <?php endif; ?>
 
                         <div style="padding:5px ;">
-                            <a href="../principal/mesa.php" class="btn btn-secondary">Voltar</a>
+                            <a href="../entregas/entregaAndamento.php" class="btn btn-secondary">Voltar</a>
                         </div>
                     </div>
                 </div>
@@ -128,7 +130,7 @@ if ($vazia == null) {
         <div class="modal-content" style="width: 60%;">
             <div class="modal-header" style="display: block;">
                 <span class="closeComanda">&times;</span>
-                <h2>Fechar Comanda </h2>
+                <h2>Concluir Entrega</h2>
             </div>
             <div class="modal-body">
                 <!-- FORMA DE PAGMENTO -->
@@ -141,14 +143,14 @@ if ($vazia == null) {
 
                     <?php else : ?>
 
-                        <legend style='color: red; font-weight: bold;'>Total do pedido: R$<?= number_format($soma[0], 2, ", ", " . ") ?></legend>
-                        <input style='visibility: hidden; width:2%;height:2%;' type='number' name='valorFinal' value='<?= $soma[0] ?>'>
-                        <?php $valor = $soma[0]; ?>
+                        <legend style='color: red; font-weight: bold;'>Total do pedido: R$<?= number_format($totalEntrega, 2, ", ", " . ") ?></legend>
+                        <input style='visibility: hidden; width:2%;height:2%;' type='number' name='valorFinal' value='<?= $totalEntrega ?>'>
+                        <?php $valor = $totalEntrega; ?>
 
                     <?php endif; ?>
                     <?php unset($_SESSION['valorFinal']); ?>
                 </div>
-                <form class="row g-3" action="../mesas/fecharMesaController.php?id=<?= $comanda; ?>&valor=<?= $valor ?>" method="POST">
+                <form class="row g-3" action="../entregas/concluiEntrega.php?id=<?= $idEntrega; ?>&valor=<?= $valor ?>" method="POST">
                     <div class="col-md-4">
                         <label class="form-label">Cartão</label>
                         <div class="input-group mb-3">
@@ -204,7 +206,7 @@ if ($vazia == null) {
                     ?>
 
                     <div style="text-align: center;">
-                        <input type="submit" id="fimVenda" name="fimVenda" class="btn btn-success" value="Finalizar mesa">
+                        <input type="submit" id="fimEntrega" name="fimEntrega" class="btn btn-success" value="Confirmar">
                     </div>
 
                 </form>
@@ -251,7 +253,7 @@ if ($vazia == null) {
 
         Swal.fire({
             title: 'RETIRAR PRODUTO',
-            text: "Confirma a retirada desse produto da comanda?",
+            text: "Confirma a retirada desse produto da entrega?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

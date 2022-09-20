@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 
             <div class="row align-items-center justify-content-center">
                 <div class="row col-md-10">
-                    <div class="row justify-content-center" style="padding: 0 0 30px 0;">
+                    <div class="row justify-content-center filterDate">
                         <!--       <form action="../relatorios/saidas.php" method="POST">
                             <div class="input-group justify-content-center">
                                 <div class="form-floating">
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 
                     <!-- EXIBE AS SAIDAS DO FILTRO ESCOLHIDO -->
                     <table id="caixa" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th scope="col">Data da Saída</th>
                                 <th scope="col">Valor</th>

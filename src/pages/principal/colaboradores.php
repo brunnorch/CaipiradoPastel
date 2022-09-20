@@ -37,20 +37,18 @@ $usuarios = mysqli_fetch_all($usuarios);
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            foreach ($usuarios as $usuario) {
-                                echo "
+                            <?php foreach ($usuarios as $usuario) : ?>
+
                                 <tr>
-                                <td>" . ucfirst($usuario[1]) . "</td>
-                                <td>" . ucfirst($usuario[2]) . "</td>
-                                <td>
-                                <a href='../colaboradores/alterarColab.php?id=$usuario[0]' class= 'btn btn-sm btn-success'><i class='bx bxs-edit-alt' ></i></a>
-                                <a href='../colaboradores/excluirColab.php?id=$usuario[0]' class= 'btn btn-sm btn-danger'><i class='bx bxs-trash-alt'></i></a>
-                                </td>
+                                    <td><?= ucfirst($usuario[1]) ?></td>
+                                    <td><?= ucfirst($usuario[2]) ?></td>
+                                    <td>
+                                        <a href='../colaboradores/alterarColab.php?id=<?= $usuario[0] ?>' class='btn btn-sm btn-success'><i class='bx bxs-edit-alt'></i></a>
+                                        <a href='../colaboradores/excluirColab.php?id=<?= $usuario[0] ?>' class='btn btn-sm btn-danger'><i class='bx bxs-trash-alt'></i></a>
+                                    </td>
                                 </tr>
-                                ";
-                            }
-                            ?>
+
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

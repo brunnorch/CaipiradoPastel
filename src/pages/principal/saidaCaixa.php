@@ -87,7 +87,6 @@ $statusCaixa = mysqli_fetch_assoc($statusCaixa);
                             <div class="input-group mb-3">
                                 <span class="input-group-text">R$</span>
                                 <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" name="valorSaida" step="0.010" onchange="this.value = this.value.replace(/,/g, '.')" required>
-                                <span class="input-group-text">,00</span>
                             </div>
                         </div>
                         <div class="col-md-12">

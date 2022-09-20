@@ -4,6 +4,7 @@ include_once('../Estrutura/estrutura.php');
 include_once('../../verificalogin.php');
 include_once('../../conexao.php');
 
+$hoje = date('Y-m-d');
 /* SELECTS DE PRODUTO MAIS VENDIDOS DE CADA GRUPO */
 if (isset($_POST['submit'])) {
     $inicio = $_POST['inicio'];
@@ -28,6 +29,28 @@ if (isset($_POST['submit'])) {
     $refrigerantes = mysqli_fetch_all($refrigerantes);
 
     $alcoolicos = mysqli_query($conexao, "SELECT nomeProduto, SUM(qtdProduto) AS total, SUM(qtdProduto * valorProduto) as renda FROM pedidos WHERE dataVenda >= '$inicio' AND dataVenda <= '$fim' AND idProduto LIKE '60%' GROUP BY nomeProduto ORDER BY SUM(qtdProduto) DESC");
+    $alcoolicos = mysqli_fetch_all($alcoolicos);
+} else {
+    /* SEM FILTRO, APARECE AS COMANDAS DO DIA */
+    $pasteisGraf = mysqli_query($conexao, "SELECT nomeProduto, SUM(qtdProduto) AS total, SUM(qtdProduto * valorProduto) as renda FROM pedidos WHERE dataVenda >= '$hoje' AND dataVenda <= '$hoje' AND idProduto LIKE '10%' GROUP BY nomeProduto ORDER BY SUM(qtdProduto) DESC LIMIT 10");
+    $pasteisGraf = mysqli_fetch_all($pasteisGraf);
+
+    $pasteis = mysqli_query($conexao, "SELECT nomeProduto, SUM(qtdProduto) AS total, SUM(qtdProduto * valorProduto) as renda FROM pedidos WHERE dataVenda >= '$hoje' AND dataVenda <= '$hoje' AND idProduto LIKE '10%' GROUP BY nomeProduto ORDER BY SUM(qtdProduto) DESC");
+    $pasteis = mysqli_fetch_all($pasteis);
+
+    $salgados = mysqli_query($conexao, "SELECT nomeProduto, SUM(qtdProduto) AS total, SUM(qtdProduto * valorProduto) as renda FROM pedidos WHERE dataVenda >= '$hoje' AND dataVenda <= '$hoje' AND idProduto LIKE '20%' GROUP BY nomeProduto ORDER BY SUM(qtdProduto) DESC");
+    $salgados = mysqli_fetch_all($salgados);
+
+    $doces = mysqli_query($conexao, "SELECT nomeProduto, SUM(qtdProduto) AS total, SUM(qtdProduto * valorProduto) as renda FROM pedidos WHERE dataVenda >= '$hoje' AND dataVenda <= '$hoje' AND idProduto LIKE '30%' GROUP BY nomeProduto ORDER BY SUM(qtdProduto) DESC");
+    $doces = mysqli_fetch_all($doces);
+
+    $bebidas = mysqli_query($conexao, "SELECT nomeProduto, SUM(qtdProduto) AS total, SUM(qtdProduto * valorProduto) as renda FROM pedidos WHERE dataVenda >= '$hoje' AND dataVenda <= '$hoje' AND idProduto LIKE '40%' AND NOT nomeProduto ='vasilhame' GROUP BY nomeProduto ORDER BY SUM(qtdProduto) DESC");
+    $bebidas = mysqli_fetch_all($bebidas);
+
+    $refrigerantes = mysqli_query($conexao, "SELECT nomeProduto, SUM(qtdProduto) AS total, SUM(qtdProduto * valorProduto) as renda FROM pedidos WHERE dataVenda >= '$hoje' AND dataVenda <= '$hoje' AND idProduto LIKE '50%' GROUP BY nomeProduto ORDER BY SUM(qtdProduto) DESC");
+    $refrigerantes = mysqli_fetch_all($refrigerantes);
+
+    $alcoolicos = mysqli_query($conexao, "SELECT nomeProduto, SUM(qtdProduto) AS total, SUM(qtdProduto * valorProduto) as renda FROM pedidos WHERE dataVenda >= '$hoje' AND dataVenda <= '$hoje' AND idProduto LIKE '60%' GROUP BY nomeProduto ORDER BY SUM(qtdProduto) DESC");
     $alcoolicos = mysqli_fetch_all($alcoolicos);
 }
 ?>
@@ -64,7 +87,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-10" style="height: 100%;">
 
                     <!-- FILTRO DE DATA INICIAL E FINAL-->
-                    <div class="row justify-content-center" style="padding: 0 0 30px 0;" style="height: 100%;">
+                    <div class="row justify-content-center">
                         <form action="../relatorios/produtos.php" method="POST">
                             <div class="input-group justify-content-center">
                                 <div class="form-floating">
@@ -156,7 +179,7 @@ if (isset($_POST['submit'])) {
 
                             <!-- TABELA DE PRODUTOS DOS PASTEIS-->
                             <table id="pasteis" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th scope="col">Produto</th>
                                         <th scope="col">Quantidade saida</th>
@@ -186,7 +209,7 @@ if (isset($_POST['submit'])) {
 
                             <!-- TABELA DE PRODUTOS DOS SALGADOS -->
                             <table id="salgados" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th scope="col">Produto</th>
                                         <th scope="col">Quantidade saida</th>
@@ -216,7 +239,7 @@ if (isset($_POST['submit'])) {
 
                             <!-- TABELA DE PRODUTOS DOS DOCES -->
                             <table id="doces" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th scope="col">Produto</th>
                                         <th scope="col">Quantidade saida</th>
@@ -246,7 +269,7 @@ if (isset($_POST['submit'])) {
 
                             <!-- TABELA DE PRODUTOS DOS BEBIDAS -->
                             <table id="bebidas" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th scope="col">Produto</th>
                                         <th scope="col">Quantidade saida</th>
@@ -275,7 +298,7 @@ if (isset($_POST['submit'])) {
 
                             <!-- TABELA DE PRODUTOS DOS REFRIGERANTES -->
                             <table id="refrigerantes" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th scope="col">Produto</th>
                                         <th scope="col">Quantidade saida</th>
@@ -305,7 +328,7 @@ if (isset($_POST['submit'])) {
 
                             <!-- TABELA DE PRODUTOS DOS ALCOOLICOS -->
                             <table id="alcoolicos" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th scope="col">Produto</th>
                                         <th scope="col">Quantidade saida</th>
@@ -334,4 +357,5 @@ if (isset($_POST['submit'])) {
         </div>
     </section>
 </body>
+
 </html>

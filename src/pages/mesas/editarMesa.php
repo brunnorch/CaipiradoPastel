@@ -9,6 +9,10 @@ $comanda = $_GET['id'];
 $info = mysqli_query($conexao, "SELECT * FROM numero_mesas WHERE comanda ='$comanda'");
 $info = mysqli_fetch_row($info);
 
+/* SELECT PARA INFORMAR QUE PEGOU O PEDIDO */
+$usuarios = mysqli_query($conexao, "SELECT usuario FROM usuario WHERE idUsuario > '2'");
+$usuarios = mysqli_fetch_all($usuarios);
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -40,15 +44,11 @@ $info = mysqli_fetch_row($info);
                             <div class="col-auto">
                                 <select class="form-select" name="newGarcom" required>
                                     <option selected></option>
-                                    <?php
-                                    $usuarios = mysqli_query($conexao, "SELECT usuario FROM usuario WHERE idUsuario > '2'");
-                                    $usuarios = mysqli_fetch_all($usuarios);
+                                    <?php foreach ($usuarios as $usuario) : ?>
 
-                                    foreach ($usuarios as $usuario) {
-                                        echo "
-                                            <option value='" . $usuario[0] . "'>" . ucfirst($usuario[0]) . "</option>
-                                            ";
-                                    } ?>
+                                        <option value='<?= $usuario[0] ?>  '><?= ucfirst($usuario[0]) ?> </option>
+                                        ";
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>

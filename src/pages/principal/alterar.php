@@ -7,8 +7,7 @@ include_once('../../conexao.php');
 if (!empty($_GET['id'])) {
     //PEGA O ID DA URL E PASSA AS INFORMAÇÕES DO BANCO PARA A PAGINA EDITAR
     $id = $_GET['id'];
-    $sql = "SELECT idProduto,grupo,tipo,nomeProduto,valorProduto,minProduto, quantiaProduto FROM produtos WHERE idProduto=$id";
-    $result = mysqli_query($conexao, $sql);
+    $result = mysqli_query($conexao, "SELECT idProduto,grupo,tipo,nomeProduto,valorProduto,minProduto, quantiaProduto FROM produtos WHERE idProduto=$id");
     $userdata = mysqli_fetch_assoc($result);
 }
 $hoje = date('d/m/Y');
@@ -77,7 +76,6 @@ $hoje = date('d/m/Y');
                             <div class="input-group mb-3">
                                 <span class="input-group-text">R$</span>
                                 <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" name="valor" id="valor" step="0.010" onchange="this.value = this.value.replace(/,/g, '.')" value="<?= $userdata['valorProduto']; ?>" required>
-                                <span class="input-group-text">,00</span>
                             </div>
                         </div>
                         <div class="col-md-4">

@@ -3,26 +3,36 @@ session_start();
 include_once('../../conexao.php');
 require_once('../../../public/assets/dompdf/autoload.inc.php');
 
-$comanda = $_GET['id'];
-$sqlComanda = mysqli_query($conexao, "SELECT comandas.idComanda, comandas.dataVenda ,pedidos.garcom,pedidos.nomeProduto, pedidos.qtdProduto, pedidos.valorProduto, 
-comandas.cartao,comandas.pix,comandas.dinheiro,comandas.desconto ,comandas.totalPedido FROM comandas
-INNER JOIN pedidos ON comandas.idComanda = pedidos.comanda WHERE comandas.idComanda ='$comanda'");
-$rowComanda = mysqli_fetch_all($sqlComanda);
+$idEntrega = $_GET['id'];
+
+$cliente = mysqli_query($conexao, "SELECT clienteEntrega,celularEntrega,bairroEntrega,enderecoEntrega,numeroEntrega,taxaEntrega,dataEntrega, horaEntrega FROM entregas WHERE idEntrega ='$idEntrega'");
+$cliente = mysqli_fetch_assoc($cliente);
+
+function celular($number)
+{
+    $number = "(" . substr($number, 0, 2) . ") " . substr($number, 2, -4) . "-" . substr($number, -4);
+    // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
+    return $number;
+}
+
+$entrega = mysqli_query($conexao, "SELECT idEntrega, nomeProduto, valorProduto, qtdProduto, dataEntrega 
+FROM entregas_andamento WHERE idEntrega ='$idEntrega'");
+$entrega = mysqli_fetch_all($entrega);
 
 $qtdItens = 0;
 $subTotal = 0;
 
-foreach ($rowComanda as $key) {
+foreach ($entrega as $key) {
     $body2[] = "
         <tr>
-        <td>" . ucfirst($key[3])  . "</td>
-        <td>" . $key[4] . "</td>
-        <td>R$ " . number_format($key[5], 2, ",", ".") . "</td>
-        <td>R$ " . number_format($key[4] * $key[5], 2, ",", ".") . "</td>
+        <td>" . ucfirst($key[1])  . "</td>
+        <td>" . $key[3] . "</td>
+        <td>R$ " . number_format($key[2], 2, ",", ".") . "</td>
+        <td>R$ " . number_format($key[3] * $key[2], 2, ",", ".") . "</td>
     </tr>
         ";
-    $qtdItens += $key[4];
-    $subTotal += $key[5] * $key[4];
+    $qtdItens += $key[3];
+    $subTotal += $key[2] * $key[3];
 };
 
 
@@ -33,8 +43,9 @@ $style = "
         margin: 0px;
         width: 80mm;
         height: auto;
-
+        font-size: 15px;
     }
+    
 
     .empresa {
         text-align: center;
@@ -73,15 +84,17 @@ $style = "
     }
 </style>
 ";
-$date = date('H:i');
 
+$date = date('H:i');
 /* TABELA DE PRODUTOS */
 $body1 = '
 <body>
     <main class="pedido">
+        <div class="logo">
+            <img src="https://caipiradopastel.000webhostapp.com/public/assets/images/LOGO.png" style ="margin: 20px 0 0 75px">
+        </div>
         <div class="empresa">
-            <h2>CAIPIRA DO PASTEL</h2>
-            <p>Comanda ' . $comanda . ' - Gar&ccedil;om ' . ucfirst($key[2])  . '<br>' . date('d/m/Y', strtotime($key[1])) . '</p>
+            <p> ' . ucfirst($cliente['clienteEntrega']) . ' - ' . celular($cliente['celularEntrega']) . '<br>Rua ' . ucfirst($cliente['enderecoEntrega']) . ', ' . $cliente['numeroEntrega'] . ', ' . ucfirst($cliente['bairroEntrega']) . '<br>' . date('d/m/Y', strtotime($cliente['dataEntrega'])) . ' - ' . $cliente['horaEntrega'] . '</p>
             <hr>
         </div>
         <div>
@@ -94,7 +107,6 @@ $body1 = '
                         <th>V. TOT</th>
                     </tr>
                 </thead>
-
                 <tbody>';
 
 $body3 = '
@@ -115,63 +127,44 @@ $body3 = '
                         <td></td>
                     </tr>
                     <tr>
-                        <th>SUB. TOTAL</th>
+                        <th>SUB. T</th>
                         <th></th>
                         <th></th>
                         <td style="font-weight: bold;">R$ ' . number_format($subTotal, 2, ", ", " . ")  . '</td>
                     </tr>
                     <tr>
-                        <th>DESCONTO</th>
+                        <th>DESC</th>
                         <th></th>
                         <th></th>
-                        <td style="font-weight: bold;">R$ ' . number_format($key[9], 2, ", ", " . ") . '</td>
+                        <td style="font-weight: bold;">R$ ' . number_format($_SESSION['desconto'], 2, ", ", " . ") . '</td>
                     </tr>
+                    <tr>
+                    <th>TAXA</th>
+                    <th></th>
+                    <th></th>
+                    <td style="font-weight: bold;">R$ ' . number_format($cliente['taxaEntrega'], 2, ", ", " . ") . '</td>
+                </tr>
                     <tr>
                         <th>TOTAL</th>
                         <th></th>
                         <th></th>
-                        <td style="font-weight: bold;">R$ ' . number_format($subTotal - $key[9], 2, ", ", " . ") . '</td>
+                        <td style="font-weight: bold;">R$ ' . number_format($subTotal + $cliente['taxaEntrega'] - $_SESSION['desconto'], 2, ", ", " . ") . '</td>
                     </tr>
                 </tfoot>
             </table>
             <hr>
         </div>
-
-        <h4>Forma de Pagamento</h4>
-        <br>
-        ';
-if ($rowComanda[0][6] == '0.00') {
-    $body4 = "<p>Pix - R$ " . $rowComanda[0][7] . "</p>
-    <p>Dinheiro - R$ " . $rowComanda[0][8] . "<p/>
+        <h4>Obrigado pela preferencia. Bom apetite!</h4>
     </main>
-</body>";
-} elseif ($rowComanda[0][7] == '0.00') {
-    $body4 = "<p>Cartao - R$ " . $rowComanda[0][6] . "</p>
-    <p>Dinheiro - R$ " . $rowComanda[0][8] . "</p>
-    </main>
-</body>";
-} elseif ($rowComanda[0][8] == '0.00') {
-    $body4 = "<p>Cartao - R$ " . $rowComanda[0][6] . "</p>
-    <p>Pix - R$ " . $rowComanda[0][7] . "</p>
-    </main>
-</body>";
-} else {
-    $body4 = "<p>Cartao - R$ " . $rowComanda[0][6] . "</p>
-    <p>Pix - R$ " . $rowComanda[0][7] . "</p>
-    <p>Dinheiro - R$ " . $rowComanda[0][8] . "</p>
-    </main>
-</body>";
-}
-
-
-
+</body>
+';
 
 $infoProd = '';
 foreach ($body2 as $key) {
     $infoProd = $infoProd . $key;
 }
 
-$nota = $style . $body1 . $infoProd . $body3 . $body4;
+$nota = $style . $body1 . $infoProd . $body3;
 
 
 
@@ -193,7 +186,7 @@ $dompdf->render();
 
 // Output the generated PDF to Browser
 $dompdf->stream(
-    "Comanda" . $comanda . ".pdf",
+    "Pedido" . $idEntrega . ".pdf",
     array(
         "Attachment" => false
     )

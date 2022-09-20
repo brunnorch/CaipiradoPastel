@@ -36,16 +36,16 @@ include_once('../../controller/grupos.php');
                     </nav>
 
                     <!-- EXIBE PRODUTOS EM SUAS ABAS -->
-                    <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-content" id="nav-tabContent" >
                         <!-- ABAS DE PASTEIS -->
                         <div class="tab-pane fade show active" id="nav-pasteis" role="tabpanel" aria-labelledby="nav-pasteis-tab">
                             <table id="pasteis" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th>Codigo</th>
-                                        <th>U. Venda</th>
+                                        <th>Unidade</th>
                                         <th>Produto</th>
-                                        <th>Valor U.</th>
+                                        <th>Valor</th>
                                         <th>Estoque</th>
                                         <th></th>
                                     </tr>
@@ -72,12 +72,12 @@ include_once('../../controller/grupos.php');
                         <!-- ABAS DE SALGADOS -->
                         <div class="tab-pane fade" id="nav-salgados" role="tabpanel" aria-labelledby="nav-salgados-tab">
                             <table id="salgados" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th>Codigo</th>
-                                        <th>U. Venda</th>
+                                        <th>Unidade</th>
                                         <th>Produto</th>
-                                        <th>Valor U.</th>
+                                        <th>Valor</th>
                                         <th>Estoque</th>
                                         <th></th>
                                     </tr>
@@ -104,12 +104,12 @@ include_once('../../controller/grupos.php');
                         <!-- ABAS DE DOCES -->
                         <div class="tab-pane fade" id="nav-doces" role="tabpanel" aria-labelledby="nav-doces-tab">
                             <table id="doces" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th>Codigo</th>
-                                        <th>U. Venda</th>
+                                        <th>Unidade</th>
                                         <th>Produto</th>
-                                        <th>Valor U.</th>
+                                        <th>Valor</th>
                                         <th>Estoque</th>
                                         <th></th>
                                     </tr>
@@ -136,12 +136,12 @@ include_once('../../controller/grupos.php');
                         <!-- ABAS DE BEBIDAS -->
                         <div class="tab-pane fade" id="nav-bebidas" role="tabpanel" aria-labelledby="nav-bebidas-tab">
                             <table id="bebidas" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th>Codigo</th>
-                                        <th>U. Venda</th>
+                                        <th>Unidade</th>
                                         <th>Produto</th>
-                                        <th>Valor U.</th>
+                                        <th>Valor</th>
                                         <th>Estoque</th>
                                         <th></th>
                                     </tr>
@@ -168,12 +168,12 @@ include_once('../../controller/grupos.php');
                         <!-- ABAS DE REFRIGERANTES -->
                         <div class="tab-pane fade" id="nav-refrigerantes" role="tabpanel" aria-labelledby="nav-refrigerantes-tab">
                             <table id="refrigerantes" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th>Codigo</th>
-                                        <th>U. Venda</th>
+                                        <th>Unidade</th>
                                         <th>Produto</th>
-                                        <th>Valor U.</th>
+                                        <th>Valor</th>
                                         <th>Estoque</th>
                                         <th></th>
                                     </tr>
@@ -200,12 +200,12 @@ include_once('../../controller/grupos.php');
                         <!-- ABAS DE ALCOOLICOS -->
                         <div class="tab-pane fade" id="nav-alcoolicos" role="tabpanel" aria-labelledby="nav-alcoolicos-tab">
                             <table id="alcoolicos" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th>Codigo</th>
-                                        <th>U. Venda</th>
+                                        <th>Unidade</th>
                                         <th>Produto</th>
-                                        <th>Valor U.</th>
+                                        <th>Valor</th>
                                         <th>Estoque</th>
                                         <th></th>
                                     </tr>

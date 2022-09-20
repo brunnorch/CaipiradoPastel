@@ -126,7 +126,7 @@ if (isset($_GET['mes']) && $_GET['mes'] == 'detalhe') {
 
                     <!-- EXIBE O CAIXA DE TODOS OS DIAS DO MES SELECIONADO -->
                     <table id="caixa" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th scope="col">Data do Caixa</th>
                                 <th scope="col">Saldo Inicial</th>

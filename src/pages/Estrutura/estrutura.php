@@ -1,3 +1,18 @@
+<?php
+include_once('../../conexao.php');
+
+/* VERIFICA QUEM ESTÁ LOGADO PARA DAR O NIVEIS DE ACESSO */
+$login = mysqli_query($conexao, "SELECT usuario,cargo FROM usuario WHERE usuario = '$_SESSION[usuario]'");
+$login = mysqli_fetch_assoc($login);
+
+/* STATUS DO CAIXA  */
+$statusCaixa = mysqli_query($conexao, "SELECT statusCaixa FROM caixa order by statusCaixa desc");
+$statusCaixa = mysqli_fetch_assoc($statusCaixa);
+
+/* STATUS DO CAIXA  */
+$statusCaixa = mysqli_query($conexao, "SELECT statusCaixa FROM caixa order by statusCaixa desc");
+$statusCaixa = mysqli_fetch_assoc($statusCaixa);
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -38,12 +53,7 @@
         </div>
         <ul class="nav-links">
 
-            <?php
-            include_once('../../conexao.php');
-            /* VERIFICA QUEM ESTÁ LOGADO PARA DAR O NIVEIS DE ACESSO */
-            $login = mysqli_query($conexao, "SELECT usuario,cargo FROM usuario WHERE usuario = '$_SESSION[usuario]'");
-            $login = mysqli_fetch_assoc($login);
-            if ($login['cargo'] == "administrador" || $login['cargo'] == "caixa") : ?>
+            <?php if ($login['cargo'] == "administrador" || $login['cargo'] == "caixa") : ?>
                 <li>
                     <a href="../principal/menu.php">
                         <i class='bx bx-home'></i>
@@ -77,20 +87,13 @@
                     </div>
                     <ul class="sub-menu">
                         <li><a class="link_name" href="#">Caixa</a></li>
-                        <?php
-                        /* STATUS DO CAIXA  */
-                        $statusCaixa = mysqli_query($conexao, "SELECT statusCaixa FROM caixa order by statusCaixa desc");
-                        $statusCaixa = mysqli_fetch_assoc($statusCaixa);
-
-                        /* SE O CAIXA ESTIVER ABERTO, REDIRECIONA PARA VENDAS */
-                        if ($statusCaixa['statusCaixa'] == 0 || $statusCaixa['statusCaixa'] == null) : ?>
+                        <?php if ($statusCaixa['statusCaixa'] == 0 || $statusCaixa['statusCaixa'] == null) : ?>
                             <li><a href='../principal/caixa.php'>Abrir Caixa</a></li>
                         <?php else : ?>
                             <li><a href='../principal/venda.php'>Caixa Aberto</a></li>
                         <?php endif; ?>
                         <li><a href="../principal/saidaCaixa.php">Lançar Saída</a></li>
                     </ul>
-
                 <li>
                     <?php if ($statusCaixa['statusCaixa'] == 0 || $statusCaixa['statusCaixa'] == null) : ?>
                         <a href='../principal/caixa.php'>
@@ -120,16 +123,32 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../entregas/entregaAndamento.php">
                         <i class='bx bx-map'></i>
-                        <span class="link_name">Delivery</span>
+                        <span class="link_name">Entregas</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name" href="#">Delivery</a></li>
+                        <li><a class="link_name" href="../entregas/entregaAndamento.php">Entregas</a></li>
                     </ul>
                 </li>
-
-
+                <li>
+                    <div class="iocn-link">
+                        <a href="../relatorios/caixaMes.php">
+                            <i class='bx bx-book-alt'></i>
+                            <span class="link_name">Relatórios</span>
+                        </a>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a class="link_name" href="#">Relatórios</a></li>
+                        <li><a href="../relatorios/caixaMes.php">Caixa</a></li>
+                        <li><a href="../relatorios/saidas.php">Saídas</a></li>
+                        <li><a href="../relatorios/comanda.php">Comandas</a></li>
+                        <li><a href="../relatorios/entregas.php">Entregas</a></li>
+                        <li><a href="../relatorios/produtos.php">Produtos</a></li>
+                        <li><a href="../relatorios/danificados.php">Danificados</a></li>
+                    </ul>
+                </li>
                 <!-- ACESSO SOMENTE DO ADMINISTRADOR  -->
                 <?php if ($login['cargo'] == "administrador") : ?>
                     <li>
@@ -141,32 +160,10 @@
                             <li><a class="link_name" href="#">Colaboradores</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <div class="iocn-link">
-                            <a href="../relatorios/caixaMes.php">
-                                <i class='bx bx-book-alt'></i>
-                                <span class="link_name">Relatórios</span>
-                            </a>
-                            <i class='bx bxs-chevron-down arrow'></i>
-                        </div>
-                        <ul class="sub-menu">
-                            <li><a class="link_name" href="#">Relatórios</a></li>
-                            <li><a href="../relatorios/caixaMes.php">Caixa</a></li>
-                            <li><a href="../relatorios/saidas.php">Saídas</a></li>
-                            <li><a href="../relatorios/comanda.php">Comandas</a></li>
-                            <li><a href="../relatorios/produtos.php">Produtos</a></li>
-                            <li><a href="../relatorios/danificados.php">Danificados</a></li>
-                        </ul>
-                    </li>
-
                 <?php endif; ?>
             <?php else : ?>
                 <li>
-                    <?php
-                    /* STATUS DO CAIXA  */
-                    $statusCaixa = mysqli_query($conexao, "SELECT statusCaixa FROM caixa order by statusCaixa desc");
-                    $statusCaixa = mysqli_fetch_assoc($statusCaixa);
-                    if ($statusCaixa['statusCaixa'] == 0 || $statusCaixa['statusCaixa'] == null) : ?>
+                    <?php if ($statusCaixa['statusCaixa'] == 0 || $statusCaixa['statusCaixa'] == null) : ?>
 
                         <a href='../principal/caixa.php'>
                             <i class='bx bx-shopping-bag'></i>
@@ -195,12 +192,12 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../entregas/entregaAndamento.php">
                         <i class='bx bx-map'></i>
-                        <span class="link_name">Delivery</span>
+                        <span class="link_name">Entregas</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name" href="#">Delivery</a></li>
+                        <li><a class="link_name" href="../entregas/entregaAndamento.php">Entregas</a></li>
                     </ul>
                 </li>
             <?php endif; ?>

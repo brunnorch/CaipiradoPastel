@@ -27,23 +27,19 @@ $_SESSION['desconto'] = 0;
         <div class="home-content">
             <!-- MESAS ATIVAS -->
             <div class="container">
-                <div class="row col-md-6">
-                    <?php
-                    foreach ($numeroMesa as $mesa) {
-                        echo "
-                            <div class='col'>
-                                <div class='p-3 border bg-light rounded-3' style='text-align: center;'>
-                                        <h4>Mesa " . $mesa[0] . "</h4>
-                                    <p>Comanda " . $mesa[1] . " Garçom " . ucfirst($mesa[2]) . "</p>
-                                    <div>
-                                        <a href='../mesas/verMesa.php?id=$mesa[1]' class='btn btn-primary'>Abrir</a>
-                                        <a href='../mesas/excluiMesaController.php?id=$mesa[1]' class='btn btn-danger'><i class='bx bxs-trash-alt'></i></a>
-                                    </div>
+                <div class="row col-md-12">
+                    <?php foreach ($numeroMesa as $mesa) : ?>
+                        <div class='col-md-3'>
+                            <div class='p-3 border bg-light rounded-3' style='text-align: center;'>
+                                <h4><?= $mesa[0] ?></h4>
+                                <p>Comanda <?= $mesa[1] ?> Garçom <?= ucfirst($mesa[2]) ?></p>
+                                <div>
+                                    <a href='../mesas/verMesa.php?id=<?= $mesa[1] ?>' class='btn btn-primary'>Abrir</a>
+                                    <a href='../mesas/excluiMesaController.php?id=<?= $mesa[1] ?>' class='btn btn-danger'><i class='bx bxs-trash-alt'></i></a>
                                 </div>
                             </div>
-                        ";
-                    }
-                    ?>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>

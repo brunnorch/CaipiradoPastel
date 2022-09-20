@@ -38,29 +38,28 @@ function alerta($type, $title, $msg)
         <div class="home-content">
 
             <div class="row align-items-center justify-content-center">
-                <div class="col-md-8">
-
-                    <!-- BOTÕES DE FECHAR CAIXA E CARRINHO -->
-                    <div class="row justify-content-around" style="padding: 0 0 30px 0;">
-                        <?php if ($login['cargo'] != "garçom") : ?>
+                <div class="col-md-10">
+                    <center>
+                        <!-- BOTÕES DE FECHAR CAIXA E CARRINHO -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-around btnFunctions">
+                            <?php if ($login['cargo'] != "garçom") : ?>
+                                <div class="col-auto">
+                                    <a href="../principal/caixa.php?id=fechar" class="btn btn-dark" id="fechaCaixa" name="fechaCaixa">Fechar</a>
+                                    <a href="../relatorios/imprimeCaixa.php?data=<?= $caixa[1] ?>" target='_blank' class="btn btn-warning">Relatório</a>
+                                </div>
+                                <div class="col-auto">
+                                    <a href="../relatorios/comanda.php" class="btn btn-primary">Comandas</a>
+                                </div>
+                            <?php endif; ?>
                             <div class="col-auto">
-                                <a href="../principal/caixa.php?id=fechar" class="btn btn-dark" id="fechaCaixa" name="fechaCaixa">Fechar caixa</a>
+                                <a href="../principal/carrinho.php" id="verCarrinho" class="btn btn-success">Mesa</a>
+                                <a href="../principal/entrega.php" id="verCarrinho" class="btn btn-success">Entrega</a>
                             </div>
-                            <div class="col-auto">
-                                <a href="../relatorios/imprimeCaixa.php?data=<?= $caixa[1] ?>" target='_blank' class="btn btn-warning">Relatório</a>
-                            </div>
-                            <div class="col-auto">
-                                <a href="../relatorios/comanda.php" class="btn btn-primary">Comandas</a>
-                            </div>
-                        <?php endif; ?>
-                        <div class="col-auto">
-                            <a href="../principal/carrinho.php" id="verCarrinho" class="btn btn-success">Ver carrinho</a>
                         </div>
-                    </div>
-
+                    </center>
                     <!-- ABAS -->
                     <nav>
-                        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist" style="padding: 30px 0 0 0 ;">
                             <button class="nav-link active" id="nav-pasteis-tab" data-bs-toggle="tab" data-bs-target="#nav-pasteis" type="button" role="tab" aria-controls="nav-pasteis" aria-selected="true">Pasteis</button>
                             <button class="nav-link" id="nav-salgados-tab" data-bs-toggle="tab" data-bs-target="#nav-salgados" type="button" role="tab" aria-controls="nav-salgados" aria-selected="false">Salgados</button>
                             <button class="nav-link" id="nav-doces-tab" data-bs-toggle="tab" data-bs-target="#nav-doces" type="button" role="tab" aria-controls="nav-doces" aria-selected="false">Doces</button>
@@ -85,7 +84,7 @@ function alerta($type, $title, $msg)
                             <!-- ABAS DE PASTEIS -->
                             <div class="tab-pane fade show active" id="nav-pasteis" role="tabpanel" aria-labelledby="nav-pasteis-tab">
                                 <table id="pasteis" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                    <thead>
+                                    <thead class="table-dark">
                                         <tr>
                                             <th scope="col">Nome do Produto</th>
                                             <th scope="col">Valor Unitário</th>
@@ -113,10 +112,10 @@ function alerta($type, $title, $msg)
                             <!-- ABAS DE SALGADOS -->
                             <div class="tab-pane fade" id="nav-salgados" role="tabpanel" aria-labelledby="nav-salgados-tab">
                                 <table id="salgados" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                    <thead>
+                                    <thead class="table-dark">
                                         <tr>
-                                            <th scope="col">Nome do Produto</th>
-                                            <th scope="col">Valor Unitário</th>
+                                            <th scope="col">Produto</th>
+                                            <th scope="col">Valor</th>
                                             <th scope="col">Estoque</th>
                                             <th scope="col"></th>
                                         </tr>
@@ -141,7 +140,7 @@ function alerta($type, $title, $msg)
                             <!-- ABAS DE DOCES -->
                             <div class="tab-pane fade" id="nav-doces" role="tabpanel" aria-labelledby="nav-doces-tab">
                                 <table id="doces" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                    <thead>
+                                    <thead class="table-dark">
                                         <tr>
                                             <th scope="col">Nome do Produto</th>
                                             <th scope="col">Valor Unitário</th>
@@ -169,7 +168,7 @@ function alerta($type, $title, $msg)
                             <!-- ABAS DE BEBIDAS -->
                             <div class="tab-pane fade" id="nav-bebidas" role="tabpanel" aria-labelledby="nav-bebidas-tab">
                                 <table id="bebidas" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                    <thead>
+                                    <thead class="table-dark">
                                         <tr>
                                             <th scope="col">Nome do Produto</th>
                                             <th scope="col">Valor Unitário</th>
@@ -197,7 +196,7 @@ function alerta($type, $title, $msg)
                             <!-- ABAS DE REFRIGERANTES -->
                             <div class="tab-pane fade" id="nav-refrigerantes" role="tabpanel" aria-labelledby="nav-refrigerantes-tab">
                                 <table id="refrigerantes" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                    <thead>
+                                    <thead class="table-dark">
                                         <tr>
                                             <th scope="col">Nome do Produto</th>
                                             <th scope="col">Valor Unitário</th>
@@ -225,7 +224,7 @@ function alerta($type, $title, $msg)
                             <!-- ABAS DE ALCOOLICOS -->
                             <div class="tab-pane fade" id="nav-alcoolicos" role="tabpanel" aria-labelledby="nav-alcoolicos-tab">
                                 <table id="alcoolicos" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                    <thead>
+                                    <thead class="table-dark">
                                         <tr>
                                             <th scope="col">Nome do Produto</th>
                                             <th scope="col">Valor Unitário</th>

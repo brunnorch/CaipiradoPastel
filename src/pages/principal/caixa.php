@@ -27,8 +27,7 @@ if (isset($_POST['submit'])) {
     $valorInicial = $_POST['valorCaixa'];
     $user = $_SESSION['usuario'];
     $status = 1;
-    $sqlabreCaixa = "INSERT INTO caixa (statusCaixa,usuarioCaixa,saldoInicial,dataCaixa) VALUES ('$status','$user','$valorInicial',NOW())";
-    $resultabreCaixa = mysqli_query($conexao, $sqlabreCaixa);
+    $resultabreCaixa = mysqli_query($conexao, "INSERT INTO caixa (statusCaixa,usuarioCaixa,saldoInicial,dataCaixa) VALUES ('$status','$user','$valorInicial',NOW())");
 
     /* AVISANDO QUE O CAIXA ABRIU */
     function alerta($type, $title, $msg)

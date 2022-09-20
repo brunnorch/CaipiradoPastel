@@ -34,7 +34,7 @@ function alerta($type, $title, $msg)
         <div class="home-content">
             <!-- PRODUTOS ABAIXO DO ESTOQUE -->
             <div class="row align-items-center justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-10">
 
                     <!-- ABAS -->
                     <nav>
@@ -49,15 +49,13 @@ function alerta($type, $title, $msg)
                     </nav>
 
                     <div class="tab-content" id="nav-tabContent">
-
-
                         <!-- ABAS DE PASTEIS -->
                         <div class="tab-pane fade show active" id="nav-pasteis" role="tabpanel" aria-labelledby="nav-pasteis-tab">
                             <table id="pasteis" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class='table-dark'>
                                     <tr>
                                         <th scope="col">Produto</th>
-                                        <th scope="col">Estoque Atual</th>
+                                        <th scope="col">Estoque</th>
                                         <th scope="col">Minimo</th>
                                         <th scope="col"></th>
                                     </tr>
@@ -71,19 +69,19 @@ function alerta($type, $title, $msg)
                                                 <td class='table-dark'><?= $info[5] ?></td>
                                                 <td class='table-dark'><a href='alterar.php?id=<?= $info[0] ?>' type='submit' class='btn btn-sm btn-success'>Editar</a></td>
                                             </tr>
+                                            <?php $alert = alerta("warning", "ATENÇÃO AO ESTOQUE", "Existem produtos que estão abaixo do estoque minímo!"); ?>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
-                                    <?php $alert = alerta("warning", "ATENÇÃO AO ESTOQUE", "Existem produtos que estão abaixo do estoque minímo!"); ?>
                                 </tbody>
                             </table>
                         </div>
                         <!-- ABAS DE SALGADOS -->
                         <div class="tab-pane fade" id="nav-salgados" role="tabpanel" aria-labelledby="nav-salgados-tab">
                             <table id="salgados" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class='table-warning'>
                                     <tr>
                                         <th scope="col">Produto</th>
-                                        <th scope="col">Estoque Atual</th>
+                                        <th scope="col">Estoque</th>
                                         <th scope="col">Minimo</th>
                                         <th scope="col"></th>
                                     </tr>
@@ -97,6 +95,7 @@ function alerta($type, $title, $msg)
                                                 <td class='table-warning'><?= $info[5] ?></td>
                                                 <td class='table-warning'><a href='alterar.php?id=<?= $info[0] ?>' type='submit' class='btn btn-sm btn-success'>Editar</a></td>
                                             </tr>
+                                            <?php $alert = alerta("warning", "ATENÇÃO AO ESTOQUE", "Existem produtos que estão abaixo do estoque minímo!"); ?>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -105,10 +104,10 @@ function alerta($type, $title, $msg)
                         <!-- ABAS DE DOCES -->
                         <div class="tab-pane fade" id="nav-doces" role="tabpanel" aria-labelledby="nav-doces-tab">
                             <table id="doces" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class='table-primary'>
                                     <tr>
                                         <th scope="col">Produto</th>
-                                        <th scope="col">Estoque Atual</th>
+                                        <th scope="col">Estoque</th>
                                         <th scope="col">Minimo</th>
                                         <th scope="col"></th>
                                     </tr>
@@ -122,6 +121,7 @@ function alerta($type, $title, $msg)
                                                 <td class='table-primary'><?= $info[5] ?></td>
                                                 <td class='table-primary'><a href='alterar.php?id=<?= $info[0] ?>' type='submit' class='btn btn-sm btn-success'>Editar</a></td>
                                             </tr>
+                                            <?php $alert = alerta("warning", "ATENÇÃO AO ESTOQUE", "Existem produtos que estão abaixo do estoque minímo!"); ?>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -130,10 +130,10 @@ function alerta($type, $title, $msg)
                         <!-- ABAS DE BEBIDAS -->
                         <div class="tab-pane fade" id="nav-bebidas" role="tabpanel" aria-labelledby="nav-bebidas-tab">
                             <table id="bebidas" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class='table-success'>
                                     <tr>
                                         <th scope="col">Produto</th>
-                                        <th scope="col">Estoque Atual</th>
+                                        <th scope="col">Estoque</th>
                                         <th scope="col">Minimo</th>
                                         <th scope="col"></th>
                                     </tr>
@@ -147,6 +147,7 @@ function alerta($type, $title, $msg)
                                                 <td class='table-success'><?= $info[5] ?></td>
                                                 <td class='table-success'><a href='alterar.php?id=<?= $info[0] ?>' type='submit' class='btn btn-sm btn-success'>Editar</a></td>
                                             </tr>
+                                            <?php $alert = alerta("warning", "ATENÇÃO AO ESTOQUE", "Existem produtos que estão abaixo do estoque minímo!"); ?>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -155,10 +156,10 @@ function alerta($type, $title, $msg)
                         <!-- ABAS DE REFRIGERANTES -->
                         <div class="tab-pane fade" id="nav-refrigerantes" role="tabpanel" aria-labelledby="nav-refrigerantes-tab">
                             <table id="refrigerantes" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class='table-danger'>
                                     <tr>
                                         <th scope="col">Produto</th>
-                                        <th scope="col">Estoque Atual</th>
+                                        <th scope="col">Estoque</th>
                                         <th scope="col">Minimo</th>
                                         <th scope="col"></th>
                                     </tr>
@@ -172,6 +173,7 @@ function alerta($type, $title, $msg)
                                                 <td class='table-danger'><?= $info[5] ?></td>
                                                 <td class='table-danger'><a href='alterar.php?id=<?= $info[0] ?>' type='submit' class='btn btn-sm btn-success'>Editar</a></td>
                                             </tr>
+                                            <?php $alert = alerta("warning", "ATENÇÃO AO ESTOQUE", "Existem produtos que estão abaixo do estoque minímo!"); ?>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -180,10 +182,10 @@ function alerta($type, $title, $msg)
                         <!-- ABAS DE ALCOOLICOS -->
                         <div class="tab-pane fade" id="nav-alcoolicos" role="tabpanel" aria-labelledby="nav-alcoolicos-tab">
                             <table id="alcoolicos" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
+                                <thead class='table-secondary'>
                                     <tr>
                                         <th scope="col">Produto</th>
-                                        <th scope="col">Estoque Atual</th>
+                                        <th scope="col">Estoque</th>
                                         <th scope="col">Minimo</th>
                                         <th scope="col"></th>
                                     </tr>
@@ -197,6 +199,7 @@ function alerta($type, $title, $msg)
                                                 <td class='table-secondary'><?= $info[5] ?></td>
                                                 <td class='table-secondary'><a href='alterar.php?id=<?= $info[0] ?>' type='submit' class='btn btn-sm btn-success'>Editar</a></td>
                                             </tr>
+                                            <?php $alert = alerta("warning", "ATENÇÃO AO ESTOQUE", "Existem produtos que estão abaixo do estoque minímo!"); ?>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </tbody>

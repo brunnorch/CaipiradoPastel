@@ -17,8 +17,7 @@ if (isset($_POST['submit'])) {
   $idFinal = $grupo . '0' . $codigo;
 
   //VERIFICANDO SE JÁ EXISTE UM REGISTRO 
-  $sql = "SELECT COUNT(*) AS total FROM produtos WHERE nomeProduto = '$nome' OR idProduto ='$idFinal'";
-  $result = mysqli_query($conexao, $sql);
+  $result = mysqli_query($conexao, "SELECT COUNT(*) AS total FROM produtos WHERE nomeProduto = '$nome' OR idProduto ='$idFinal'");
   $row = mysqli_fetch_assoc($result);
   if ($row['total'] == 1) {
     /* EXISTE PRODUTO COM ID OU NOME IGUAL */
@@ -118,7 +117,6 @@ $hoje = date('d/m/Y');
               <div class="input-group mb-3">
                 <span class="input-group-text">R$</span>
                 <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" name="valor" id="valor" step="0.010" onchange="this.value = this.value.replace(/,/g, '.')" required>
-                <span class="input-group-text">,00</span>
               </div>
             </div>
             <div class="col-md-4">
